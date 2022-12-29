@@ -54,10 +54,20 @@ class TemplateManager
         );
     }
 
+    public static function getFunction(string $name): ?callable
+    {
+        return (self::$twig->getFunction($name))->callable ?? null;
+    }
+
     public static function addFilter(string $name, callable $callback): void
     {
         self::$twig->addFilter(
             new TwigFilter($name, $callback)
         );
+    }
+
+    public static function getFilter(string $name): ?callable
+    {
+        return (self::$twig->getFilter($name))->callable ?? null;
     }
 }

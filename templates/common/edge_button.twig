@@ -1,0 +1,19 @@
+{% macro render(data) %}
+{%- if data.asInput -%}
+<input class="{{ _self.class(data) }}" {{ _self.attributes(data) }} type="submit" value="{{ data.label }}">
+{%- else -%}
+<{{ data.url ? "a" : "button" }} class="{{ _self.class(data) }}" {{ _self.attributes(data) }}>
+
+</{{ data.url ? "a" : "button" }}>
+{%- endif -%}
+{% endmacro %}
+
+{% macro class(data) %}
+EdgeButton EdgeButton--{{ data.style }} EdgeButton--{{ data.size }} {% for class in data.class %}{{ class ~ " " }}{% endfor %}
+{% endmacro %}
+
+{% macro attributes(data) %}
+{%- for name, value in data.attributes -%}
+data-{{ name }}="{{ value }}"
+{%- endfor -%}
+{% endmacro %}

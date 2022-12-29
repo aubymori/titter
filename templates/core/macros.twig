@@ -1,0 +1,17 @@
+{% macro css(name, class) %}
+{%- set url = "https://abs.twimg.com/a/" -%}
+{%- set url = url ~ app.cssRev ~ "/css/t1/" -%}
+{%- if app.nightMode -%}
+{%- set url = url ~ "nightmode_" -%}
+{%- endif -%}
+{%- set url = url ~ "twitter_" ~ name ~ ".bundle.css" -%}
+<link rel="stylesheet" href="{{ url }}" {{ class ? ('class="' ~ class ~ 'CSSBundles"')|raw }}>
+{% endmacro %}
+
+{% macro preload_js(name) %}
+<link rel="preload" href="https://abs.twimg.com/k/{{ app.lang }}/{{ jsName(name, app.lang) }}.js" as="script">
+{% endmacro %}
+
+{% macro async_js(name) %}
+<script src="https://abs.twimg.com/k/{{ app.lang }}/{{ jsName(name, app.lang) }}.js" async=""></script>
+{% endmacro %}

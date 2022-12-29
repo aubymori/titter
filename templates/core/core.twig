@@ -1,0 +1,30 @@
+{% import "core/macros.twig" as core %}
+<!DOCTYPE html>
+<html lang="{{ app.language }}" data-scribe-reduced-action-queue="true">
+    <head>
+        {% include "core/head.twig" %}
+    </head>
+    <body class="{% include "core/body_class.twig" %}" data-fouc-class-names="{% block swift_class_names %}{% endblock %}" dir="{{ app.dir }}}">
+        <script id="swift_loading_indicator">
+            document.body.className = document.body.className + " " + document.body.getAttribute("data-fouc-class-names");
+        </script>
+        <noscript>
+            <div class="NoScriptForm">
+                <div class="NoScriptForm-content">
+                    <span class="NoScriptForm-logo Icon Icon--logo Icon--extraLarge"></span>
+                    <p>{{ app.noScriptForm.message }}</p>
+                </div>
+            </div>
+        </noscript>
+        <a href="#timeline" class="u-hiddenVisually focusable">{{ app.skipToContent.message }}</a>
+        <div id="doc" data-at-shortcutkeys="{{ app.shortcutKeys|json_encode }}" class="">
+            <div class="topbar js-topbar">
+                {% include "common/pageframe/topbar.twig" %}
+            </div>
+        </div>
+        <input type="hidden" class="swift-boot-module" value="app/pages/profile/highline_landing">
+        <input type="hidden" id="swift-module-path" value="https://abs.twimg.com/k/swift/en">
+        {{ core.async_js("init") }}
+        <input type="hidden" id="init-data" class="json-data" value="{{ include("core/js_config.twig")|e }}">
+    </body>
+</html>

@@ -1,0 +1,189 @@
+{% import "core/macros.twig" as core %}
+<meta charset="utf-8">
+<script>
+    ! function()
+    {
+        window.initErrorstack || (window.initErrorstack = []), window.onerror = function(r, i, n, o, t)
+        {
+            r.indexOf("Script error.") > -1 || window.initErrorstack.push({
+                errorMsg: r,
+                url: i,
+                lineNumber: n,
+                column: o,
+                errorObj: t
+            })
+        }
+    }();
+</script>
+<script id="bouncer_terminate_iframe">
+    if (window.top != window)
+    {
+        window.top.postMessage({
+            bouncer: true,
+            event: "complete"
+        }, "*");
+    }
+</script>
+<script id="swift_action_queue">
+    ! function()
+    {
+        function e(e)
+        {
+            if (e || (e = window.event), !e) return !1;
+            if (e.timestamp = (new Date).getTime(), !e.target && e.srcElement && (e.target = e.srcElement), document.documentElement.getAttribute("data-scribe-reduced-action-queue"))
+                for (var t = e.target; t && t != document.body;)
+                {
+                    if ("A" == t.tagName) return;
+                    t = t.parentNode
+                }
+            return i("all", o(e)), a(e) ? (document.addEventListener || (e = o(e)), e.preventDefault = e.stopPropagation = e.stopImmediatePropagation = function() {}, y ? (v.push(e), i("captured", e)) : i("ignored", e), !1) : (i("direct", e), !0)
+        }
+
+        function t(e)
+        {
+            n();
+            for (var t, r = 0; t = v[r]; r++)
+            {
+                var a = e(t.target),
+                    i = a.closest("a")[0];
+                if ("click" == t.type && i)
+                {
+                    var o = e.data(i, "events"),
+                        u = o && o.click,
+                        c = !i.hostname.match(g) || !i.href.match(/#$/);
+                    if (!u && c)
+                    {
+                        window.location = i.href;
+                        continue
+                    }
+                }
+                a.trigger(e.event.fix(t))
+            }
+            window.swiftActionQueue.wasFlushed = !0
+        }
+
+        function r()
+        {
+            for (var e in b)
+                if ("all" != e)
+                    for (var t = b[e], r = 0; r < t.length; r++) console.log("actionQueue", c(t[r]))
+        }
+
+        function n()
+        {
+            clearTimeout(w);
+            for (var e, t = 0; e = h[t]; t++) document["on" + e] = null
+        }
+
+        function a(e)
+        {
+            if (!e.target) return !1;
+            var t = e.target,
+                r = (t.tagName || "").toLowerCase();
+            if (e.metaKey) return !1;
+            if (e.shiftKey && "a" == r) return !1;
+            if (t.hostname && !t.hostname.match(g)) return !1;
+            if (e.type.match(p) && s(t)) return !1;
+            if ("label" == r)
+            {
+                var n = t.getAttribute("for");
+                if (n)
+                {
+                    var a = document.getElementById(n);
+                    if (a && f(a)) return !1
+                }
+                else
+                    for (var i, o = 0; i = t.childNodes[o]; o++)
+                        if (f(i)) return !1
+            }
+            return !0
+        }
+
+        function i(e, t)
+        {
+            t.bucket = e, b[e].push(t)
+        }
+
+        function o(e)
+        {
+            var t = {};
+            for (var r in e) t[r] = e[r];
+            return t
+        }
+
+        function u(e)
+        {
+            for (; e && e != document.body;)
+            {
+                if ("A" == e.tagName) return e;
+                e = e.parentNode
+            }
+        }
+
+        function c(e)
+        {
+            var t = [];
+            e.bucket && t.push("[" + e.bucket + "]"), t.push(e.type);
+            var r, n, a = e.target,
+                i = u(a),
+                o = "",
+                c = e.timestamp && e.timestamp - d;
+            return "click" === e.type && i ? (r = i.className.trim().replace(/\s+/g, "."), n = i.id.trim(), o = /[^#]$/.test(i.href) ? " (" + i.href + ")" : "", a = '"' + i.innerText.replace(/\n+/g, " ").trim() + '"') : (r = a.className.trim().replace(/\s+/g, "."), n = a.id.trim(), a = a.tagName.toLowerCase(), e.keyCode && (a = String.fromCharCode(e.keyCode) + " : " + a)), t.push(a + o + (n && "#" + n) + (!n && r ? "." + r : "")), c && t.push(c), t.join(" ")
+        }
+
+        function f(e)
+        {
+            var t = (e.tagName || "").toLowerCase();
+            return "input" == t && "checkbox" == e.getAttribute("type")
+        }
+
+        function s(e)
+        {
+            var t = (e.tagName || "").toLowerCase();
+            return "textarea" == t || "input" == t && "text" == e.getAttribute("type") || "true" == e.getAttribute("contenteditable")
+        }
+        for (var m, d = (new Date).getTime(), l = 1e4, g = /^([^\.]+\.)*twitter\.com$/, p = /^key/, h = ["click", "keydown", "keypress", "keyup"], v = [], w = null, y = !0, b = {
+                captured: [],
+                ignored: [],
+                direct: [],
+                all: []
+            }, k = 0; m = h[k]; k++) document["on" + m] = e;
+        w = setTimeout(function()
+        {
+            y = !1
+        }, l), window.swiftActionQueue = {
+            buckets: b,
+            flush: t,
+            logActions: r,
+            wasFlushed: !1
+        }
+    }();
+</script>
+<script id="composition_state">
+    ! function()
+    {
+        function t(t)
+        {
+            t.target.setAttribute("data-in-composition", "true")
+        }
+
+        function n(t)
+        {
+            t.target.removeAttribute("data-in-composition")
+        }
+        document.addEventListener && (document.addEventListener("compositionstart", t, !1), document.addEventListener("compositionend", n, !1))
+    }();
+</script>
+{{ core.css("core", "core") }}
+{{ core.css("more_1", "more") }}
+{{ core.css("more_2", "more") }}
+<link rel="dns-prefretch" href="https://pbs.twimg.com">
+<link rel="dns-prefetch" href="https://t.co">
+{{ core.preload_js("init") }}
+{{ core.preload_js("commons") }}
+{%- for module in app.page.modules -%}
+{{ core.preaload_js(module) }}
+{%- endfor -%}
+<title>{{ app.page.title ?? "Twitter" }}</title>
+<meta name="swift-page-name" id="swift-page-name" content="{{ app.page.name }}">
+<meta name="swift-page-section" id="swift-section-name" content="{{ app.page.sectionName }}">

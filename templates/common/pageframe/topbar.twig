@@ -1,0 +1,79 @@
+{% from "common/edge_button.twig" import render as edge_button %}
+<div class="global-nav global-nav--newLoggedOut" data-section-term="top_nav">
+    <div class="global-nav-inner">
+        <div class="container">
+            <ul class="nav js-global-actions" role="navigation" id="global-actions">
+                {% for item in app.topbar.nav.items %}
+                <li id="global-nav-{{ item.id }}" class="{{ item.id }}" data-global-action="{{ item.id }}">
+                    <a href="{{ item.url }}" class="js-nav js-tooltip js-dynamic-tooltip" data-placement="bottom" data-component-context="{{ item.id }}_nav" data-nav="{{ item.id }}">
+                        <span class="Icon Icon--{{ item.icon }} Icon--large"></span>
+                        {%- if item.activeIcon -%}
+                        <span class="Icon Icon--{{ item.icon }}Filled Icon--large"></span>
+                        {%- endif -%}
+                        <span class="text" aria-hidden="true">{{ item.label }}</span>
+                        <span class="u-hiddenVisually a11y-inactive-page-text">{{ item.label }}</span>
+                        <span class="u-hiddenVisually a11y-active-page-text">{{ item.activeLabel }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="pull-right nav-extras">
+                <div role="search">
+                    {% set searchbox = app.topbar.searchbox %}
+                    <form action="/search" id="global-nav-search" class="t1-form form-search js-search-form">
+                        <label for="search-query" class="visuallyhidden">
+                            {{ searchbox.a11yLabel }}
+                        </label>
+                        <input type="text" id="search-query" class="search-input" placeholder="{{ searchbox.placeholder }}" name="q" autocomplete="off" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-owns="typeahead-dropdown-1">
+                        <span class="search-icon js-search-action">
+                            <button class="Icon Icon--medium Icon--search nav-search" type="submit" tabindex="-1">
+                                <span class="visuallyhidden">{{ searchbox.btnLabel }}</span>
+                            </button>
+                        </span>
+                    </form>
+                </div>
+                <ul id="session" class="nav secondary-nav session-dropdown">
+                    <li class="dropdown js-session">
+                        {% set link = app.topbar.signinLink %}
+                        <a href="{{ link.url }}" id="signin-link" class="dropdown-toggle js-dropdown-toggle dropdown-signin">
+                            <small>{{ link.question }}</small>
+                            <span class="emphasize">{{ link.action }}</span>
+                            <span class="caret"></span>
+                        </a>
+                        <div id="signin-dropdown" class="dropdown-menu dropdown-form dropdown-menu--rightAlign is-forceRight">
+                            {% set dialog = link.dialog %}
+                            <span class="dropdown-caret right">
+                                <span class="caret-outer"></span>
+                                <span class="caret-inner">  </span>
+                            </span>
+                            <div class="signin-dialog-body">
+                                <div>{{ dialog.title }}</div>
+                                <form action="https://twitter.com/sessions" method="post" class="LoginForm js-front-signin" data-form-component="login_callout" data-element="form">
+                                    <div class="LoginForm-input LoginForm-username">
+                                        <input class="text-input email-input js-signin-email" type="text" name="session[username_or_email]" autocomplete="username" placeholder="{{ dialog.usernamePlaceholder }}">
+                                    </div>
+                                    <div class="LoginForm-input LoginForm-password">
+                                        <input class="text-input" type="password" name="session[password]" placeholder="{{ dialog.passwordPlaceholder }}" autocomplete="current-password">
+                                    </div>
+                                    <div class="LoginForm-rememberForgot">
+                                        <label>
+                                            <input type="checkbox" value="1" name="remember_me" checked="checked">
+                                            <span>{{ dialog.rememberMeLabel }}</span>
+                                        </label>
+                                        <span class="separator">&middot;</span>
+                                        <a href="{{ dialog.forgotPasswordLink.url }}" class="forgot" rel="noopener">
+                                            {{ dialog.forgotPasswordLink.text }}
+                                        </a>
+                                    </div>
+                                    {{ edge_button(dialog.loginButton) }}
+                                </form>
+                                <hr>
+                                <div class="signup SignupForm"></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

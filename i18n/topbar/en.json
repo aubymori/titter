@@ -1,0 +1,16 @@
+{
+    "tabHome": "Home",
+    "tabNotifications": "Notifications",
+    "tabMessages": "Messages",
+    "tabActive": "%s, current page.",
+    "searchPlaceholder": "Search Twitter",
+    "searchA11yLabel": "Search query",
+    "signinPromo": "Have an account?",
+    "signinPromoAction": "Log in",
+    "usernamePlaceholder": "Phone, email, or username",
+    "passwordPlaceholder": "Password",
+    "rememberMeLabel": "Remember me",
+    "forgotPasswordLink": "Forgot password?",
+    "signUpHeader": "New to Twitter?",
+    "signUpButton": "Sign up"
+}

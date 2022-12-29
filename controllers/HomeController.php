@@ -10,7 +10,7 @@ class HomeController extends CoreController
 
     public function onGet(object &$app, RequestMetadata $request)
     {
-        $app->testValue = "Hello, titter!";
+        
     }
 }
 

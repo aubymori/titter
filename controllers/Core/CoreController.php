@@ -1,6 +1,14 @@
 <?php
 namespace Titter\Controller\Core;
 
+use Titter\Model\Pageframe\{
+    Topbar,
+    Footer,
+    NoScriptForm,
+    SkipToContent,
+    ShortcutKeys
+};
+
 use Titter\{
     ControllerV2\RequestMetadata,
     TemplateManager
@@ -10,6 +18,9 @@ class CoreController
 {
     /** Use template? */
     public bool $useTemplate = true;
+
+    /** Template uses core template? */
+    public bool $useCoreTemplate = true;
 
     /** Template path minus .twig extension */
     public string $template = "";
@@ -23,7 +34,7 @@ class CoreController
     public function get(object &$app, RequestMetadata $request): void
     {
         $this->onGet($app, $request);
-        $this->init();
+        $this->init($app);
     }
 
     /**
@@ -43,7 +54,7 @@ class CoreController
     public function post(object $app, RequestMetadata $request): void
     {
         $this->onPost($app, $request);
-        $this->init();
+        $this->init($app);
     }
 
     /**
@@ -54,10 +65,19 @@ class CoreController
     public function onPost(object &$app, RequestMetadata $request)
     {}
 
-    public function init()
+    public function init(object &$app)
     {
         if ($this->useTemplate)
         {
+            if ($this->useCoreTemplate)
+            {
+                $app->topbar = new Topbar();
+                $app->footer = new Footer();
+                $app->noScriptForm = new NoScriptForm();
+                $app->skipToContent = new SkipToContent();
+                $app->shortcutKeys = new ShortcutKeys();
+            }
+
             if ($this->template === "")
             {
                 throw new \ValueError("Missing template name in " . get_class($this));
