@@ -2,7 +2,8 @@
 use Titter\ControllerV2\Router;
 
 Router::funnel([
-    "/favicon.ico"
+    "/favicon.ico",
+    "/opensearch.xml"
 ]);
 
 Router::get([

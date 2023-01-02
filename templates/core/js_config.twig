@@ -308,7 +308,7 @@
         "section": null,
         "module": "app\/pages\/profile\/highline_landing",
         "cache_ttl": 300,
-        "body_class_names": "{% include "core/body_class.twig" %}",
+        "body_class_names": "{{ include("core/body_class.twig")|e("js") }}",
         "doc_class_names": "",
         "route_name": "",
         "page_container_class_names": "AppContent",

@@ -6,7 +6,7 @@ use Titter\Model\Pageframe\{
     Footer,
     NoScriptForm,
     SkipToContent,
-    ShortcutKeys
+    ShortcutKeys,
 };
 
 use Titter\{

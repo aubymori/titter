@@ -4,6 +4,8 @@ namespace Titter\Model\Pageframe;
 use Titter\i18n;
 use Titter\Model\Common\EdgeButton;
 
+use function PHPSTORM_META\map;
+
 class Topbar
 {
     private i18n $strings;
@@ -116,7 +118,11 @@ class HeaderSigninDialog
             style: "secondary",
             size: "medium",
             label: $strings->signUpButton,
-            url: "/signup"
+            url: "/signup",
+            class: [
+                "u-block",
+                "js-signup"
+            ]
         );
     }
 }

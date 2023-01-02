@@ -182,8 +182,10 @@
 {{ core.preload_js("init") }}
 {{ core.preload_js("commons") }}
 {%- for module in app.page.modules -%}
-{{ core.preaload_js(module) }}
+{{ core.preload_js(module) }}
 {%- endfor -%}
 <title>{{ app.page.title ?? "Twitter" }}</title>
+<link rel="shortcut icon" href="https://abs.twimg.com/favicons/favicon.ico" type="image/x-icon">
 <meta name="swift-page-name" id="swift-page-name" content="{{ app.page.name }}">
 <meta name="swift-page-section" id="swift-section-name" content="{{ app.page.sectionName }}">
+<link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Twitter">

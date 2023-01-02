@@ -25,6 +25,10 @@
         <input type="hidden" class="swift-boot-module" value="app/pages/profile/highline_landing">
         <input type="hidden" id="swift-module-path" value="https://abs.twimg.com/k/swift/en">
         {{ core.async_js("init") }}
+        <div class="hidden" id="hidden-content">
+            <iframe aria-hidden="true" class="tweet-post-iframe" name="tweet-post-iframe"></iframe>
+            <iframe aria-hidden="true" class="dm-post-iframe" name="dm-post-iframe"></iframe>
+        </div>
         <input type="hidden" id="init-data" class="json-data" value="{{ include("core/js_config.twig")|e }}">
     </body>
 </html>
