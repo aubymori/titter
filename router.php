@@ -7,5 +7,6 @@ Router::funnel([
 ]);
 
 Router::get([
-    "/" => "HomeController"
+    "/" => "HomeController",
+    "default" => "ProfileController"
 ]);

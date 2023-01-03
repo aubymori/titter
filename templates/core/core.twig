@@ -1,6 +1,6 @@
 {% import "core/macros.twig" as core %}
 <!DOCTYPE html>
-<html lang="{{ app.language }}" data-scribe-reduced-action-queue="true">
+<html lang="{{ app.lang }}" data-scribe-reduced-action-queue="true">
     <head>
         {% include "core/head.twig" %}
     </head>
@@ -20,6 +20,16 @@
         <div id="doc" data-at-shortcutkeys="{{ app.shortcutKeys|json_encode }}" class="">
             <div class="topbar js-topbar">
                 {% include "common/pageframe/topbar.twig" %}
+            </div>
+            <div id="page-outer">
+                <div id="page-container" class="AppContent">
+                    {% block header %}{% endblock %}
+                    <div class="AppContainer">
+                        <div class="AppContent-main content-main u-cf" role="main" aria-labelledby="content-main-heading">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <input type="hidden" class="swift-boot-module" value="app/pages/profile/highline_landing">

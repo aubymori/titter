@@ -1,0 +1,7 @@
+{% extends "core/core.twig" %}
+
+{% block content %}
+<div style="display:none">
+    {{ app.response|json_encode }}
+</div>
+{% endblock %}

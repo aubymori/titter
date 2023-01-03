@@ -11,7 +11,7 @@ include "modules/polyfill/AllowDynamicProperties.php";
 $app = (object) [];
 
 // Define basic variables
-$app->lang = "en"; // TODO: i18n
+$app->lang = &\Titter\i18n::$globalLang; // TODO: i18n
 $app->dir = "ltr";
 
 $app->nightMode = \Titter\Util\Cookies::isNightMode();

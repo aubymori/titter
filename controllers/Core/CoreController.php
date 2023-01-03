@@ -1,17 +1,18 @@
 <?php
 namespace Titter\Controller\Core;
 
+use Titter\{
+    ControllerV2\RequestMetadata,
+    TemplateManager,
+    Network
+};
+
 use Titter\Model\Pageframe\{
     Topbar,
     Footer,
     NoScriptForm,
     SkipToContent,
     ShortcutKeys,
-};
-
-use Titter\{
-    ControllerV2\RequestMetadata,
-    TemplateManager
 };
 
 class CoreController
@@ -67,6 +68,8 @@ class CoreController
 
     public function init(object &$app)
     {
+        Network::run();
+
         if ($this->useTemplate)
         {
             if ($this->useCoreTemplate)
