@@ -6,7 +6,12 @@ use YukisCoffee\CoffeeRequest\{
     Promise
 };
 
-use Titter\i18n;
+use Titter\{
+    i18n,
+    Util\Cookies
+};
+
+use function Titter\Async\async;
 
 class NetworkFailedRequestExeception extends \Exception {}
 
@@ -33,16 +38,17 @@ class Network
         $host = self::API_HOST;
         $key = self::GRAPHQL_KEY;
         
-        return new Promise(function($resolve, $reject)
+        return async(function()
             use(
-                $action,
-                $variables,
-                $features,
-                $host,
-                $key
+                &$action,
+                &$variables,
+                &$features,
+                &$host,
+                &$key
             ) {
                 $variables = urlencode(json_encode($variables));
                 $features = urlencode(json_encode($features));
+                $gt = yield Cookies::getGuestToken();
 
                 CoffeeRequest::request(
                     "{$host}/graphql/{$key}/{$action}?variables={$variables}&features={$features}",
@@ -51,20 +57,21 @@ class Network
                             "Authorization" => self::GRAPHQL_AUTH,
                             "X-Twitter-Active-User" => "Yes",
                             "X-Twitter-Client-Language" => i18n::$globalLang,
-                            "X-Guest-Token" => "1610054669849468928"
+                            "X-Guest-Token" => $gt
                         ],
                         "onError" => "ignore",
                         "dnsOverride" => self::DNS_OVERRIDE_HOST
                     ]
-                )->then(function ($response) use ($resolve, $reject)
+                )->then(function ($response)
                     {
                         if (200 == $response->status)
                         {
-                            $resolve($response);
+                            return $response;
                         }
                         else
                         {
-                            $reject(new NetworkFailedRequestExeception($response));
+                            throw new NetworkFailedRequestExeception($response);
+                            return;
                         }
                     }
                 );

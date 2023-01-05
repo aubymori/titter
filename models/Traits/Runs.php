@@ -30,15 +30,75 @@ namespace Titter\Model\Traits;
  */
 class Runs
 {
-    public const MENTION_REGEX = "/(?<=^|\s)@[a-zA-Z0-9_]{1,20}\b/i";
-    public const HASHTAG_REGEX = "/(?<=^|\s)#[a-zA-Z0-9_]+\b/i";
+    public const CONTENT_REGEX =
+    "/" .
+    "((?<=^|\s)@[a-zA-Z0-9_]{1,20}\b)". // Mentions
+    "|" .
+    "((?<=^|\s)#[a-zA-Z0-9_]+\b)" . // Hashtags
+    "|" .
+    "((?:http|https):\/\/t\.co\/[a-zA-Z0-9\-\.]{8,10})" .
+    "/i";
 
-    public static function from(string $orig): object
+    public const MENTION_CHARACTER = "@";
+    public const HASHTAG_CHARACTER = "#";
+
+    /**
+     * Make a runs formatted string from a normal string.
+     * 
+     * @param string   $orig         Original string.
+     * @param string[] $displayUrls  List of URLs to display in place of t.co links.
+     */
+    public static function from(string $orig, array $displayUrls = []): object
     {
-        $mentions = [];
-        preg_match_all(self::MENTION_REGEX, $orig, $mentions);
+        $split = preg_split(self::CONTENT_REGEX, $orig, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
-        $hashtags = [];
-        preg_match_all(self::HASHTAG_REGEX, $orig, $hashtags);
+        if (count($split) == 1)
+        {
+            return (object) [
+                "simpleText" => $orig
+            ];
+        }
+        
+        $runs = [];
+
+        // Keep track of the amount of urls added
+        $urls = 0;
+        foreach ($split as $string)
+        {
+            switch(substr($string, 0, 1))
+            {
+                case self::MENTION_CHARACTER:
+                    $runs[] = (object) [
+                        "text" => $string,
+                        "url" => "/" . substr($string, 1)
+                    ];
+                    break;
+                case self::HASHTAG_CHARACTER:
+                    $runs[] = (object) [
+                        "text" => $string,
+                        "url" => "/search?q=%23" . substr($string, 1)
+                    ];
+                    break;
+                default:
+                    if (substr($string, 0, 4) == "http")
+                    {
+                        $runs[] = (object) [
+                            "text" => $displayUrls[$urls] ?? $string,
+                            "url" => $string
+                        ];
+                        $urls++;
+                    }
+                    else
+                    {
+                        $runs[] = (object) [
+                            "text" => $string
+                        ];
+                    }
+            }
+        }
+
+        return (object) [
+            "runs" => $runs
+        ];
     }
 }

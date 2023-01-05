@@ -1,5 +1,6 @@
 {
     "require": {
-        "twig/twig": "^3.4"
+        "twig/twig": "^3.4",
+        "stillat/numeral.php": "^2.0"
     }
 }

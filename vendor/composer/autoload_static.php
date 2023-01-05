@@ -20,6 +20,7 @@ class ComposerStaticInit0024313064580fc0985f41849d180f44
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Stillat\\Numeral\\' => 16,
         ),
     );
 
@@ -35,6 +36,10 @@ class ComposerStaticInit0024313064580fc0985f41849d180f44
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Stillat\\Numeral\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stillat/numeral.php/src',
         ),
     );
 

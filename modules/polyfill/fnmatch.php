@@ -1,5 +1,5 @@
 <?php
-use \Rehike\ControllerV2\Util\GlobToRegexp;
+use \Titter\ControllerV2\Util\GlobToRegexp;
 
 /**
  * An fnmatch polyfill for certain PHP configurations, most

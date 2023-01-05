@@ -44,6 +44,8 @@ class ProfileController extends CoreController
                 $data->user = $user;
             }
         });
+
+        $app->page = new Profile($data);
     }
 }
 

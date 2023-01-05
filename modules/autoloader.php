@@ -1,4 +1,6 @@
 <?php
+require "modules/functions/async.php";
+
 /**
  * Declare and install the Rehike autoloader.
  * 
