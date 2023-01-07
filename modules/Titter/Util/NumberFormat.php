@@ -1,5 +1,5 @@
 <?php
-namespace Titter;
+namespace Titter\Util;
 
 use Stillat\Numeral\Languages\LanguageManager;
 use Stillat\Numeral\Numeral;
@@ -18,6 +18,11 @@ class NumberFormat
 
     public static function shorten(int $number)
     {
+        if ($number < 10000)
+        {
+            return self::$formatter->format($number, "0,0");
+        }
+
         switch (strlen((string) $number) % 3)
         {
             case 0:

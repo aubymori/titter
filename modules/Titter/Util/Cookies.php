@@ -4,6 +4,7 @@ namespace Titter\Util;
 use YukisCoffee\CoffeeRequest\CoffeeRequest;
 use YukisCoffee\CoffeeRequest\Enum\PromiseStatus;
 use YukisCoffee\CoffeeRequest\Promise;
+use Titter\i18n;
 
 use function Titter\Async\async;
 
@@ -14,6 +15,8 @@ use function Titter\Async\async;
  */
 class Cookies
 {
+    protected const API_AUTH = "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
+
     public static function isNightMode(): bool
     {
         return (isset($_COOKIE["night_mode"]))
@@ -42,14 +45,31 @@ class Cookies
                 ]
             ]);
 
+            // Cookie string for later request (see below)
+            $cookiestr = "";
+
             if ($cookies = @$response->headers->{"set-cookie"})
             foreach ($cookies as $cookie)
-            if (substr($cookie, 0, 9) == "guest_id=")
             {
-                $gt = substr($cookie, 14, 18);
-                setcookie("gt", $gt, time() + (60 * 60  *24));
-                return $gt;
+                $cookiestr .= substr($cookie, 0, strpos($cookie, ";")) . ";";
             }
+
+            // "Activate" the new guest ID
+            $activate = yield CoffeeRequest::request("https://api.twitter.com/1.1/guest/activate.json", [
+                "headers" => [
+                    "User-Agent" => $_SERVER["HTTP_USER_AGENT"],
+                    "Authorization" => self::API_AUTH,
+                    "Cookie" => $cookiestr,
+                    "X-Twitter-Active-User" => "Yes",
+                    "X-Twitter-Client-Language" => i18n::$globalLang
+                ],
+                "method" => "POST"
+            ]);
+
+            $activate = $activate->getJson();
+            
+            setcookie("gt", $activate->guest_token, time() + (60 * 60 * 24));
+            return $activate->guest_token;
         });
     }
 }

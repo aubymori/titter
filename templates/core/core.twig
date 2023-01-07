@@ -4,7 +4,7 @@
     <head>
         {% include "core/head.twig" %}
     </head>
-    <body class="{% include "core/body_class.twig" %}" data-fouc-class-names="{% block swift_class_names %}{% endblock %}" dir="{{ app.dir }}}">
+    <body class="{% include "core/body_class.twig" %} {% block body_class %}{% endblock %}" data-fouc-class-names="swift-loading {% block swift_class_names %}{% endblock %}" dir="{{ app.dir }}">
         <script id="swift_loading_indicator">
             document.body.className = document.body.className + " " + document.body.getAttribute("data-fouc-class-names");
         </script>
@@ -22,13 +22,9 @@
                 {% include "common/pageframe/topbar.twig" %}
             </div>
             <div id="page-outer">
-                <div id="page-container" class="AppContent">
+                <div id="page-container" class="AppContent {% block page_class %}{% endblock %}">
                     {% block header %}{% endblock %}
-                    <div class="AppContainer">
-                        <div class="AppContent-main content-main u-cf" role="main" aria-labelledby="content-main-heading">
-                            {% block content %}{% endblock %}
-                        </div>
-                    </div>
+                    {% block content %}{% endblock %}
                 </div>
             </div>
         </div>

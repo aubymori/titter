@@ -1,0 +1,21 @@
+{
+    "statTweets": "Tweets",
+    "statTweetsTip": "%s Tweets",
+    "statFollowing": "Following",
+    "statFollowingTip": "%s Following",
+    "statFollowers": "Followers",
+    "statFollowersTip": "%s Following",
+    "statLikes": "Likes",
+    "statLikesTip": "%s Likes",
+    "statLists": "Lists",
+    "statListsTip": "%s Lists",
+    "verifiedBadge": "Verified account",
+    "bioLocation": "Joined %s",
+    "bioBirthday": "Born %s",
+    "tabTweets": "Tweets",
+    "tabWithReplies": "Tweets & replies",
+    "tabMedia": "Media",
+    "suspendedPageTitle": "Twitter / Account suspended",
+    "suspendedTitle": "Account suspended",
+    "suspendedMessage": "This account has been suspended."
+}

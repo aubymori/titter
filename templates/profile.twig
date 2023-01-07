@@ -1,7 +1,118 @@
 {% extends "core/core.twig" %}
 
-{% block content %}
-<div style="display:none">
-    {{ app.response|json_encode }}
+{% block body_class %}
+{% if not app.page.error %}
+enhanced-mini-profile
+ProfilePage
+ProfilePage--withWarning
+no-nav-banners
+{% endif %}
+{% endblock %}
+
+{% block page_class %}
+{% if app.page.error %}
+wrapper
+wrapper-profile
+{% endif %}
+{% endblock %}
+
+{% set threeCol = true %}
+
+{% block header %}
+{% if app.page.canopy %}
+{% set canopy = app.page.canopy %}
+<div class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large js-variableHeightTopBar">
+    <div class="ProfileCanopy-inner">
+        <div class="ProfileCanopy-header u-bgUserColor">
+            <div class="ProfileCanopy-headerBg">
+                <img alt="" src="{{ canopy.banner }}">
+            </div>
+            <div class="AppContainer">
+                <div class="ProfileCanopy-avatar">
+                    <div class="ProfileAvatar">
+                        <a class="ProfileAvatar-container u-block js-tooltip profile-picture"
+                           href="{{ canopy.avatar.url }}"
+                           data-resolved-url-large="{{ canopy.avatar.url }}"
+                           data-url="{{ canopy.avatar.url }}"
+                           target="_blank"
+                           rel="noopener"
+                           title="{{ canopy.avatar.tooltip }}"
+                           >
+                            <img src="{{ canopy.avatar.url }}" alt="{{ canopy.avatar.tooltip }}" class="ProfileAvatar-image">
+                        </a>
+                    </div>
+                </div>
+                <div class="ProfileCanopy-headerPromptAnchor"></div>
+            </div>
+        </div>
+        <div class="ProfileCanopy-navBar u-boxShadow">
+            <div class="AppContainer">
+                <div class="Grid Grid--withGutter">
+                    <div class="Grid-cell u-size1of3 u-lg-size1of4">
+                        <div class="ProfileCanopy-card" role="presentation">
+                            <div class="ProfileCardMini">
+                                <a class="ProfileCardMini-avatar profile-picture js-tooltip"
+                                   href="{{ canopy.card.avatar }}"
+                                   data-resolved-url-large="{{ canopy.card.avatar }}"
+                                   data-url="{{ canopy.card.avatar }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   title="{{ canopy.card.name }}">
+                                    <img src="{{ canopy.card.avatar }}" alt="{{ canopy.card.name }}" class="ProfileCardMini-avatarImage"></img>
+                                </a>
+                                <div class="ProfileCardMini-details">
+                                    <div class="ProfileNameTruncated account-group">
+                                        <div class="u-textTruncate u-inlineBlock ProfileNameTruncated-withBadges ProfileNameTruncated-withBadges--1">
+                                            <a href="/{{ canopy.card.screenName }}" class="fullname ProfileNameTruncated-link u-textInheritColor js-nav">
+                                                {{ canopy.card.name }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="ProfileCardMini-screenname">
+                                        <a href="/{{ canopy.card.screenName }}" class="ProfileCardMini-screennameLink u-linkComplex js-nav u-dir" dir="ltr">
+                                            <span class="username u-dir" dir="ltr">
+                                                @<b class="u-linkComplex-target">{{ canopy.card.screenName }}</b>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Grid-cell u-size2of3 u-lg-size3of4">
+                        <div class="ProfileCanopy-nav">
+                            <div class="ProfileNav" role="navigation" data-user-id="{{ canopy.id }}">
+                                <ul class="ProfileNav-list">
+                                    {% for stat in canopy.stats %}
+                                    <li class="ProfileNav-item ProfileNav-item--{{ stat.id }} {{ stat.active ? "is-active" }}">
+                                        <a {% if not stat.active %}href="{{ stat.url }}" {% endif %}class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav"
+                                            title="{{ stat.tooltip }}">
+                                            <span class="ProfileNav-label" aria-hidden="true">{{ stat.label }}</span>
+                                            <span class="ProfileNav-value" data-count="{{ stat.count }}" data-is-compact="false">
+                                                {{ stat.value }}
+                                            </span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if app.page.error %}
+<div class="module component">
+    <div class="flex-module error-page clearfix">
+        <h1>{{ app.page.error.title }}</h1>
+        <p>{{ app.page.error.message }}</p>
+    </div>
+</div>
+{% endif  %}
 {% endblock %}
