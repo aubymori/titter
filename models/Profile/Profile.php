@@ -6,6 +6,7 @@ use Titter\Util\{
     NumberFormat,
     Images
 };
+use Titter\Model\Traits\Runs;
 
 #[\AllowDynamicProperties]
 class Profile
@@ -36,7 +37,8 @@ class Profile
             $data->user->legacy->screen_name ?? ""
         );
 
-        $this->canopy = new ProfileCanopy($data->user->legacy, (int) $data->user->rest_id);
+        $this->canopy = new ProfileCanopy($data->user->legacy, $data->user->is_blue_verified, (int) $data->user->rest_id);
+        $this->info = new ProfileInfo($data->user->legacy, $data->user->is_blue_verified);
     }
 }
 
@@ -53,12 +55,12 @@ class ProfileCanopy
 
     public int $id;
 
-    public function __construct(object $data, int $id)
+    public function __construct(object $data, bool $blueVerified,  int $id)
     {
         $strings = Profile::$strings;
         $this->banner = $data->profile_banner_url ?? null;   
         $this->avatar = new ProfileAvatar($data);
-        $this->card = new ProfileCanopyCard($data);
+        $this->card = new ProfileCanopyCard($data, $blueVerified);
         $this->id = $id;
 
         $stats = &$this->stats;
@@ -124,12 +126,14 @@ class ProfileCanopyCard
     public string $avatar;
     public string $name;
     public string $screenName;
+    public bool   $verified;
 
-    public function __construct(object $data)
+    public function __construct(object $info, bool $blueVerified)
     {
-        $this->avatar = $data->profile_image_url_https;
-        $this->name = $data->name;
-        $this->screenName = $data->screen_name;
+        $this->avatar = $info->profile_image_url_https;
+        $this->name = $info->name;
+        $this->screenName = $info->screen_name;
+        $this->verified = ($info->verified && !$blueVerified);
     }
 }
 
@@ -150,5 +154,31 @@ class ProfileCanopyStat
         $this->count = $count;
         $this->value = NumberFormat::shorten($count);
         $this->tooltip = sprintf($tooltip, number_format($count));
+    }
+}
+
+class ProfileInfo
+{
+    public string $name;
+    public string $screenName;
+    public bool   $verified;
+    public object $bio;
+    public string $location;
+    public object $url;
+    public string $joinDate;
+    public string $birthDate;
+
+    public function __construct(object $info, bool $blueVerified)
+    {
+        $this->name = $info->name;
+        $this->screenName = $info->screen_name;
+        $this->verified = ($info->verified && !$blueVerified);
+        $links = [];
+        if (isset($info->entities->description->urls))
+        foreach($info->entities->description->urls as $url)
+        {
+            $links[] = $url->display_url;
+        }
+        $this->bio = Runs::from($info->description, $links);
     }
 }

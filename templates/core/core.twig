@@ -5,6 +5,9 @@
         {% include "core/head.twig" %}
     </head>
     <body class="{% include "core/body_class.twig" %} {% block body_class %}{% endblock %}" data-fouc-class-names="swift-loading {% block swift_class_names %}{% endblock %}" dir="{{ app.dir }}">
+        <pre id="debug" style="display: none">
+            {{ app|json_encode }}
+        </pre>
         <script id="swift_loading_indicator">
             document.body.className = document.body.className + " " + document.body.getAttribute("data-fouc-class-names");
         </script>

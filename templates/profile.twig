@@ -67,6 +67,13 @@ wrapper-profile
                                                 {{ canopy.card.name }}
                                             </a>
                                         </div>
+                                        {% if canopy.card.verified %}
+                                        <span class="UserBadges">
+                                            <span class="Icon Icon--verified">
+                                                <span class="u-hiddenVisually">{{ app.msgs.verifiedAccount }}</span>
+                                            </span>
+                                        </span>
+                                        {% endif %}
                                     </div>
                                     <div class="ProfileCardMini-screenname">
                                         <a href="/{{ canopy.card.screenName }}" class="ProfileCardMini-screennameLink u-linkComplex js-nav u-dir" dir="ltr">
@@ -107,12 +114,62 @@ wrapper-profile
 {% endblock %}
 
 {% block content %}
-{% if app.page.error %}
-<div class="module component">
-    <div class="flex-module error-page clearfix">
-        <h1>{{ app.page.error.title }}</h1>
-        <p>{{ app.page.error.message }}</p>
-    </div>
-</div>
-{% endif  %}
+    {% if app.page.error %}
+        <div class="module component">
+            <div class="flex-module error-page clearfix">
+                <h1>{{ app.page.error.title }}</h1>
+                <p>{{ app.page.error.message }}</p>
+            </div>
+        </div>
+    {% else %}
+        {% embed "common/three_col_page.twig" %}
+            {% block col_one_content %}
+                {% set info = app.page.info %}
+                <div class="Grid Grid--withGutter">
+                    <div class="Grid-cell">
+                        <div class="ProfileSidebar ProfileSidebar--withLeftAlignment">
+                            <div class="ProfileHeaderCard">
+                                {% apply spaceless %}
+                                <h1 class="ProfileHeaderCard-name">
+                                    <a href="/{{ info.screenName }}" class="ProfileHeaderCard-nameLink u-textInheritColor js-nav">{{ info.name }}</a>
+                                    {% if info.verified %}
+                                    <span class="ProfileHeaderCard-badges">
+                                        <a href="/help/verified" class="js-tooltip" data-placement="right" target="_blank" rel="noopener" title="{{ app.msgs.verifiedAccount }}">
+                                            <span class="Icon Icon--verified">
+                                                <span class="u-hiddenVisually">{{ app.msgs.verifiedAccount }}</span>
+                                            </span>
+                                        </a>
+                                    </span>
+                                    {% endif %}
+                                </h1>
+                                {% endapply %}
+                                <h2 class="ProfileHeaderCard-screenname u-inlineBlock u-dir" dir="ltr">
+                                    <a href="/{{ info.screenName }}" class="ProfileHeaderCard-screennameLink u-linkComplex js-nav">
+                                        <span class="username u-dir" dir="ltr">
+                                            @<b class="u-linkComplex-target">{{ info.screenName }}</b>
+                                        </span>
+                                    </a>
+                                </h2>
+                                <p class="ProfileHeaderCard-bio u-dir" dir="ltr">
+                                    {% if info.bio.simpleText %}
+                                        {{ info.bio.simpleText }}
+                                    {% else %}
+                                        {% for run in info.bio.runs %}
+                                            {% if run.url %}
+                                                <a href="{{ run.url }}">
+                                            {% endif %}
+                                            {{ run.text }}
+                                            {% if run.url %}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endembed %}
+    {% endif %}
 {% endblock %}

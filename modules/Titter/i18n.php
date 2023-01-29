@@ -94,6 +94,14 @@ class i18n
     }
 
     /**
+     * Get the strings of the currently loaded langauge.
+     */
+    public function getStrings(): ?object
+    {
+        return $this->strings->{$this->lang} ?? null;
+    }
+
+    /**
      * Set the global language.
      */
     public static function setGlobalLang(string $lang): void

@@ -42,6 +42,8 @@ class Runs
     public const MENTION_CHARACTER = "@";
     public const HASHTAG_CHARACTER = "#";
 
+    public const EMOJI_REGEX = "/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/";
+
     /**
      * Make a runs formatted string from a normal string.
      * 
@@ -76,7 +78,7 @@ class Runs
                 case self::HASHTAG_CHARACTER:
                     $runs[] = (object) [
                         "text" => $string,
-                        "url" => "/search?q=%23" . substr($string, 1)
+                        "url" => "/hashtag/" . substr($string, 1)
                     ];
                     break;
                 default:

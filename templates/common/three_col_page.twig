@@ -1,0 +1,19 @@
+<div class="AppContainer">
+    <div class="AppContent-main content-main u-cf" role="main" aria-labelledby="content-main-heading">
+        <div class="Grid Grid--withGutter">
+            <div class="Grid-cell u-size1of3 u-lg-size1of4">
+                {% block col_one_content %}{% endblock %}
+            </div>
+            <div class="Grid-cell u-size2of3 u-lg-size3of4">
+                <div class="Grid Grid--withGutter">
+                    <div class="Grid-cell u-lg-size2of3">
+                        {% block col_two_content %}{% endblock %}
+                    </div>
+                    <div class="Grid-cell u-size1of3">
+                        {% block col_three_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

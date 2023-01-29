@@ -36,7 +36,28 @@ class Cookies
         });
     }
 
-    public static function getNewGuestToken(): Promise/*<YukisCoffee\CoffeeRequest\Network\Response>*/
+    /**
+     * Validate the new guest token, and if it is
+     * invalid, generate a new one.
+     */
+    public static function validateGuestToken(): Promise/*<string>*/
+    {
+        return async(function() {
+            $response = yield CoffeeRequest::request("https://api.twitter.com/1.1/hashflags.json", [
+                "headers" => [
+                    "User-Agent" => $_SERVER["HTTP_USER_AGENT"],
+                    "Authorization" => self::API_AUTH,
+                    "X-Guest-Token" => $_COOKIE["gt"],
+                    "X-Twitter-Active-User" => "Yes",
+                    "X-Twitter-Client-Language" => i18n::$globalLang
+                ]
+            ]);
+
+            
+        });
+    }
+
+    public static function getNewGuestToken(): Promise/*<string>*/
     {
         return async(function() {
             $response = yield CoffeeRequest::request("https://twitter.com", [

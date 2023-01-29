@@ -30,6 +30,9 @@ foreach (glob("modules/TemplateFunctions/*") as $file)
 use Titter\ControllerV2\Core as ControllerV2;
 use Titter\TemplateManager;
 
+$msgs = new \Titter\i18n("global");
+$app->msgs = $msgs->getStrings();
+
 // Initialize global state variable for
 // controllers and templates
 ControllerV2::registerStateVariable($app);
