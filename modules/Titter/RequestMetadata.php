@@ -1,5 +1,5 @@
 <?php
-namespace Titter\ControllerV2;
+namespace Titter;
 
 use Titter\DataArray;
 

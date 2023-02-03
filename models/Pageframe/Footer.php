@@ -8,6 +8,10 @@ class Footer
     public string $copyright;
     public array $links = [];
 
+    /**
+     * This doesn't need localization,
+     * so we store it here.
+     */
     private const COPYRIGHT_FORMAT = "© %s Twitter";
 
     public function __construct()

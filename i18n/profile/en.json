@@ -15,7 +15,11 @@
     "tabTweets": "Tweets",
     "tabWithReplies": "Tweets & replies",
     "tabMedia": "Media",
+    "tabActive": "%s, current page.",
     "suspendedPageTitle": "Twitter / Account suspended",
     "suspendedTitle": "Account suspended",
-    "suspendedMessage": "This account has been suspended."
+    "suspendedMessage": "This account has been suspended.",
+    "signupPromoHeader": "New to Twitter?",
+    "signupPromoMessage": "Sign up now to get your own personalized timeline!",
+    "signupPromoAction": "Sign up"
 }

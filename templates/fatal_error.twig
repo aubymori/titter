@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fatal error</title>
+        <style>
+            html, body
+            {
+                min-height: 100vh;
+            }
+
+            body
+            {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 13px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #container
+            {
+                width: 800px;
+            }
+            
+            pre
+            {
+                border: 1px solid #ccc;
+                background: #f1f1f1;
+                padding: 8px;
+                white-space: pre-wrap;
+                word-wrap: break-all;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 0 24 24" width="48px" fill="#000">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+            </svg>
+            <h1>Fatal error</h1>
+            <p>
+                A fatal error has occured, and titter cannot continue. Sorry for the inconvenience.
+                <br>
+                Here are the technical details:
+            </p>
+            <p>In <b>{{ app.error.file }}</b> on line <b>{{ app.error.line }}</b>:</p>
+            <pre>{{ app.error.message }}</pre>
+        </div>
+    </body>
+</html>

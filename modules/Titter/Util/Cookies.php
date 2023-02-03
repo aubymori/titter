@@ -17,6 +17,18 @@ class Cookies
 {
     protected const API_AUTH = "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
 
+    public static function __initStatic()
+    {
+        if (isset($_COOKIE["gt"]))
+        {
+            self::validateGuestToken();
+        }
+        else
+        {
+            self::getNewGuestToken();
+        }
+    }
+
     public static function isNightMode(): bool
     {
         return (isset($_COOKIE["night_mode"]))
@@ -53,7 +65,17 @@ class Cookies
                 ]
             ]);
 
-            
+            $json = $response->getJson();
+
+            if (isset($json->errors))
+            foreach ($json->errors as $error)
+            {
+                if ($error->message == "Bad guest token")
+                {
+                    self::getNewGuestToken();
+                    return;
+                }
+            }
         });
     }
 

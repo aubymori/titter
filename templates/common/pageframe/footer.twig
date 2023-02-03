@@ -1,0 +1,20 @@
+{% macro render(config) %}
+<div class="Footer module roaming-module {{ config.slim ? "Footer--slim" }} {{ config.blankBackground ? "Footer--blankBackground" }}">
+    <div class="flex-module">
+        <div class="flex-module-inner js-items-container">
+            <ul class="u-cf">
+                <li class="Footer-item Footer-copyright copyright">
+                    {{ app.footer.copyright }}
+                </li>
+                {% for link in app.footer.links %}
+                <li class="Footer-item">
+                    <a href="{{ link.url }}" class="Footer-link" rel="noopener">
+                        {{ link.label }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endmacro %}

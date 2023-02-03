@@ -95,6 +95,7 @@ wrapper-profile
                                         <a {% if not stat.active %}href="{{ stat.url }}" {% endif %}class="ProfileNav-stat ProfileNav-stat--link u-borderUserColor u-textCenter js-tooltip js-nav"
                                             title="{{ stat.tooltip }}">
                                             <span class="ProfileNav-label" aria-hidden="true">{{ stat.label }}</span>
+                                            <span class="u-hiddenVisually">{{ stat.active ? stat.activeLabel : stat.label }}</span>
                                             <span class="ProfileNav-value" data-count="{{ stat.count }}" data-is-compact="false">
                                                 {{ stat.value }}
                                             </span>
@@ -169,6 +170,67 @@ wrapper-profile
                         </div>
                     </div>
                 </div>
+            {% endblock %}
+
+            {% block col_two_content %}
+            {% set heading = app.page.content.heading %}
+            <div class="ProfileHeading">
+                <div class="ProfileHeading-spacer"></div>
+                <div class="ProfileHeading-content">
+                    <h2 id="content-main-heading" class="ProfileHeading-title {{ heading.tabs|length > 0 ? "u-hiddenVisually" }}">
+                        {{ heading.title }}
+                    </h2>
+                    <ul class="ProfileHeading-toggle">
+                        {% for tab in heading.tabs %}
+                        <li class="ProfileHeading-toggleItem {{ tab.active ? "is-active" }}" data-element-term="{{ tab.tab }}_toggle">
+                            {% if tab.active %}
+                            <span aria-hidden="true">{{ tab.label }}</span>
+                            <span class="u-hiddenVisually">{{ tab.activeLabel }}</span>
+                            {% else %}
+                            <a href="{{ tab.url }}" class="ProfileHeading-toggleLink" data-nav="{{ tab.tab }}_toggle">
+                                {{ tab.label }}
+                            </a>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endblock %}
+
+            {% block col_three_content %}
+            {% from "common/edge_button.twig" import render as edge_button %}
+            {% from "common/pageframe/footer.twig" import render as footer %}
+            {% set sidebar = app.page.sidebar %}
+            <div class="Grid Grid--withGutter">
+                <div class="Grid-cell">
+                    <div class="ProfileSidebar ProfileSidebar--withRightAlignment">
+                        <div class="MoveableModule">
+                            <div class="SidebarCommonModules">
+                                {% if sidebar.signupPromo %}
+                                <div class="SignupCallOut module js-signup-call-out">
+                                    <div class="SignupCallOut-header">
+                                        <h3 class="SignupCallOut-title u-textBreak">
+                                            {{ sidebar.signupPromo.header }}
+                                        </h3>
+                                    </div>
+                                    <div class="SignupCallOut-subheader">
+                                        {{ sidebar.signupPromo.message }}
+                                    </div>
+                                    <div class="signup SignupForm">
+                                        {{ edge_button(sidebar.signupPromo.button) }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {{ footer({
+                                    slim: true,
+                                    blankBackground: true
+                                }) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endblock %}
         {% endembed %}
     {% endif %}

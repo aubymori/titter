@@ -28,9 +28,9 @@ function autoload($class)
 
         require "models/${file}.php";
     }
-    else if ("Titter/Controller" == substr($filename, 0, 17))
+    else if ("Titter/Controller/" == substr($filename, 0, 18))
     {
-        $file = substr($filename, 17, strlen($filename));
+        $file = substr($filename, 18, strlen($filename));
 
         require "controllers/${file}.php";
     }

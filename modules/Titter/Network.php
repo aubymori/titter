@@ -20,13 +20,6 @@ class Network
     protected const API_HOST = "https://api.twitter.com";
     protected const API_VERSION = "1.1";
     protected const API_AUTH = "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
-    
-    /**
-     * Some key or something??? I don't know.
-     * It's planted in the URL between /graphql/
-     * and the action.
-     */
-    protected const GRAPHQL_KEY = "tgMiZwwhWR2sI0KsNsExrA";    
 
     protected const DNS_OVERRIDE_HOST = "1.1.1.1";
 
@@ -37,22 +30,20 @@ class Network
     ): Promise/*<Response>*/
     {
         $host = self::API_HOST;
-        $key = self::GRAPHQL_KEY;
         
         return async(function()
             use(
                 &$action,
                 &$variables,
                 &$features,
-                &$host,
-                &$key
+                &$host
             ) {
                 $variables = urlencode(json_encode($variables));
                 $features = urlencode(json_encode($features));
                 $gt = yield Cookies::getGuestToken();
 
                 $response = yield CoffeeRequest::request(
-                    "{$host}/graphql/{$key}/{$action}?variables={$variables}&features={$features}",
+                    "{$host}/graphql/{$action}?variables={$variables}&features={$features}",
                     [
                         "headers" => [
                             "User-Agent" => $_SERVER["HTTP_USER_AGENT"],

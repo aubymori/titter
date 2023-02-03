@@ -1,10 +1,9 @@
 <?php
-use Titter\{
-    ControllerV2\RequestMetadata,
-    Controller\Core\CoreController,
-    NumberFormat,
-    Util\Cookies
-};
+namespace Titter\Controller;
+
+use Titter\RequestMetadata;
+use Titter\Util\NumberFormat;
+Use Titter\Util\Cookies;
 
 class HomeController extends CoreController
 {

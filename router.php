@@ -1,16 +1,19 @@
 <?php
 use Titter\ControllerV2\Router;
+use Titter\Controller;
 
-Router::funnel([
+Controller::funnel([
     "/favicon.ico",
     "/opensearch.xml"
 ]);
 
-Router::redirect([
+Controller::redirect([
     "/hashtag/(*)" => "/search?q=%23$1"
 ]);
 
-Router::get([
-    "/" => "HomeController",
-    "default" => "ProfileController"
+Controller::route([
+    "get" => [
+        "/" => "HomeController",
+        "default" => "ProfileController"
+    ]
 ]);

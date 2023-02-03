@@ -6,9 +6,13 @@ require "vendor/autoload.php";
 require "modules/autoloader.php";
 
 include "modules/polyfill/AllowDynamicProperties.php";
+include "error_handler.php";
+
+use Titter\Controller;
+use Titter\TemplateManager;
 
 // Global state variable
-$app = (object) [];
+$app = &Controller::$app;
 
 // Define basic variables
 $app->lang = &\Titter\i18n::$globalLang;
@@ -27,15 +31,13 @@ foreach (glob("modules/TemplateFunctions/*") as $file)
     include $file;
 }
 
-use Titter\ControllerV2\Core as ControllerV2;
-use Titter\TemplateManager;
-
 $msgs = new \Titter\i18n("global");
 $app->msgs = $msgs->getStrings();
 
 // Initialize global state variable for
 // controllers and templates
-ControllerV2::registerStateVariable($app);
 TemplateManager::registerGlobalState($app);
 
 require "router.php";
+
+Controller::run();

@@ -1,5 +1,5 @@
 <?php
-namespace Titter\ControllerV2\Util;
+namespace Titter\Util;
 
 /**
  * Convert a glob to a regexp. This is used by Controller v2.

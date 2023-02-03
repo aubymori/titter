@@ -2,7 +2,7 @@
 {%- if data.asInput -%}
 <input class="{{ _self.class(data) }}" {{ _self.attributes(data) }} type="submit" value="{{ data.label }}">
 {%- else -%}
-<{{ data.url ? "a" : "button" }} class="{{ _self.class(data) }}" {{ _self.attributes(data) }}>
+<{{ data.url ? "a" : "button" }} {% if data.url %}href="{{ data.url }}"{% endif %} class="{{ _self.class(data) }}" {{ _self.attributes(data) }}>
     {{ data.label }}
 </{{ data.url ? "a" : "button" }}>
 {%- endif -%}

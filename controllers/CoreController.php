@@ -1,19 +1,16 @@
 <?php
-namespace Titter\Controller\Core;
+namespace Titter\Controller;
 
-use Titter\{
-    ControllerV2\RequestMetadata,
-    TemplateManager,
-    Network
-};
+use Titter\Controller;
+use Titter\RequestMetadata;
+use Titter\TemplateManager;
+use Titter\Network;
 
-use Titter\Model\Pageframe\{
-    Topbar,
-    Footer,
-    NoScriptForm,
-    SkipToContent,
-    ShortcutKeys,
-};
+use Titter\Model\Pageframe\Topbar;
+use Titter\Model\Pageframe\Footer;
+use Titter\Model\Pageframe\NoScriptForm;
+use Titter\Model\Pageframe\SkipToContent;
+use Titter\Model\Pageframe\ShortcutKeys;
 
 class CoreController
 {
@@ -28,14 +25,11 @@ class CoreController
 
     /**
      * Initialize for GET requests.
-     * 
-     * @param object $app               State variable.
-     * @param RequestMetadata $request  Request data.
      */
-    public function get(object &$app, RequestMetadata $request): void
+    public function get(): void
     {
-        $this->onGet($app, $request);
-        $this->init($app);
+        $this->onGet(Controller::$app, new RequestMetadata());
+        $this->init(Controller::$app);
     }
 
     /**
@@ -48,14 +42,11 @@ class CoreController
 
     /**
      * Initialize for GET requests.
-     * 
-     * @param object $app               State variable.
-     * @param RequestMetadata $request  Request data.
      */
-    public function post(object $app, RequestMetadata $request): void
+    public function post(): void
     {
-        $this->onPost($app, $request);
-        $this->init($app);
+        $this->onPost(Controller::$app, new RequestMetadata());
+        $this->init(Controller::$app);
     }
 
     /**
