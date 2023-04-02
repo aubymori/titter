@@ -152,7 +152,7 @@ class ProfileCanopyCard
         $this->avatar = $info->profile_image_url_https;
         $this->name = $info->name;
         $this->screenName = $info->screen_name;
-        $this->verified = ($info->verified && !$blueVerified);
+        $this->verified = ($info->verified || $blueVerified);
     }
 }
 
@@ -194,7 +194,7 @@ class ProfileInfo
     {
         $this->name = $info->name;
         $this->screenName = $info->screen_name;
-        $this->verified = ($info->verified && !$blueVerified);
+        $this->verified = ($info->verified || $blueVerified);
         $links = [];
         if (isset($info->entities->description->urls))
         foreach($info->entities->description->urls as $url)
