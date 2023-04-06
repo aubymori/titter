@@ -37,3 +37,17 @@
 {% endif %}
 {% endapply %}
 {% endmacro %}
+
+{% macro simple_text(text) %}
+{% if text.simpleText %}
+    {{ text.simpleText }}
+{% elseif text.runs %}
+    {% for run in text.runs %}
+        {% if run.emoji %}
+            {{ run.emoji.alt }}
+        {% else %}
+            {{ run.text }}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% endmacro %}

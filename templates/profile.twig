@@ -21,6 +21,7 @@ wrapper-profile
 {% block header %}
 {% if app.page.canopy %}
 {% set canopy = app.page.canopy %}
+{% import "core/macros.twig" as core %}
 <div class="ProfileCanopy ProfileCanopy--withNav ProfileCanopy--large js-variableHeightTopBar">
     <div class="ProfileCanopy-inner">
         <div class="ProfileCanopy-header u-bgUserColor">
@@ -57,14 +58,14 @@ wrapper-profile
                                    data-url="{{ canopy.card.avatar }}"
                                    target="_blank"
                                    rel="noopener"
-                                   title="{{ canopy.card.name }}">
-                                    <img src="{{ canopy.card.avatar }}" alt="{{ canopy.card.name }}" class="ProfileCardMini-avatarImage"></img>
+                                   title="{{ core.simple_text(canopy.card.name) }}">
+                                    <img src="{{ canopy.card.avatar }}" alt="{{ core.simple_text(canopy.card.name) }}" class="ProfileCardMini-avatarImage"></img>
                                 </a>
                                 <div class="ProfileCardMini-details">
                                     <div class="ProfileNameTruncated account-group">
                                         <div class="u-textTruncate u-inlineBlock ProfileNameTruncated-withBadges ProfileNameTruncated-withBadges--1">
                                             <a href="/{{ canopy.card.screenName }}" class="fullname ProfileNameTruncated-link u-textInheritColor js-nav">
-                                                {{ canopy.card.name }}
+                                                {{ core.text(canopy.card.name) }}
                                             </a>
                                         </div>
                                         {% if canopy.card.verified %}

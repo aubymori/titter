@@ -143,14 +143,14 @@ class ProfileAvatar
 class ProfileCanopyCard
 {
     public string $avatar;
-    public string $name;
+    public object $name;
     public string $screenName;
     public bool   $verified;
 
     public function __construct(object $info, bool $blueVerified)
     {
         $this->avatar = $info->profile_image_url_https;
-        $this->name = $info->name;
+        $this->name = Runs::twemoji($info->name);
         $this->screenName = $info->screen_name;
         $this->verified = ($info->verified || $blueVerified);
     }
