@@ -1,6 +1,8 @@
 <?php
 namespace Titter\Model\Traits;
 
+use function Emoji\detect_emoji;
+
 /**
  * Implements a way to put links inside of text.
  * Twitter's internal API just gives the raw text,
@@ -39,25 +41,20 @@ class Runs
     "((?:http|https):\/\/t\.co\/[a-zA-Z0-9\-\.]{8,10})" .
     "/i";
 
-    public const MENTION_CHARACTER = "@";
-    public const HASHTAG_CHARACTER = "#";
-
-    public const EMOJI_REGEX = "/(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/";
-
     /**
      * Make a runs formatted string from a normal string.
      * 
-     * @param string   $orig         Original string.
+     * @param string   $text         Original string.
      * @param string[] $displayUrls  List of URLs to display in place of t.co links.
      */
-    public static function from(string $orig, array $displayUrls = []): object
+    public static function from(string $text, array $displayUrls = []): object
     {
-        $split = preg_split(self::CONTENT_REGEX, $orig, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        $split = preg_split(self::CONTENT_REGEX, $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         if (count($split) == 1)
         {
             return (object) [
-                "simpleText" => $orig
+                "simpleText" => $text
             ];
         }
         
@@ -69,13 +66,13 @@ class Runs
         {
             switch(substr($string, 0, 1))
             {
-                case self::MENTION_CHARACTER:
+                case "@":
                     $runs[] = (object) [
                         "text" => $string,
                         "url" => "/" . substr($string, 1)
                     ];
                     break;
-                case self::HASHTAG_CHARACTER:
+                case "#":
                     $runs[] = (object) [
                         "text" => $string,
                         "url" => "/hashtag/" . substr($string, 1)
@@ -97,6 +94,66 @@ class Runs
                         ];
                     }
             }
+        }
+
+        foreach ($runs as $i => &$run)
+        if (!isset($run->url) && isset($run->text))
+        {
+            $twemoji = self::twemoji($run->text);
+            if (isset($twemoji->runs))
+                array_splice($runs, $i, 1, $twemoji->runs);
+        }
+
+        return (object) [
+            "runs" => $runs
+        ];
+    }
+
+    /**
+     * Process emojis.
+     */
+    public static function twemoji(string $text): object
+    {
+        $emojis = detect_emoji($text);
+        if (count($emojis) == 0)
+        {
+            return (object) [
+                "simpleText" => $text
+            ];
+        }
+
+        $start = 0;
+        $runs = [];
+        foreach ($emojis as $emoji)
+        {
+            $beforeText = substr($text, $start, $emoji["byte_offset"] - $start);
+
+            if (!empty($beforeText))
+            {
+                $runs[] = (object) [
+                    "text" => $beforeText
+                ];
+            }
+
+            // Twemoji URLs omit U+FE0F
+            $code = preg_replace("/(^|-)fe0f($|-)/", "", strtolower($emoji["hex_str"]));
+            $runs[] = (object) [
+                "emoji" => (object) [
+                    "url" => "https://twemoji.maxcdn.com/v/latest/72x72/" . $code . ".png",
+                    "label" => $emoji["short_name"], // TODO: Use more appropriate text for this
+                    "alt" => $emoji["emoji"]
+                ]
+            ];
+
+            $start = $emoji["byte_offset"] + strlen($emoji["emoji"]);
+        }
+
+        $lastText = substr($text, $start, null);
+        if (!empty($lastText))
+        {
+            $runs[] = (object) [
+                "text" => $lastText
+            ];
         }
 
         return (object) [

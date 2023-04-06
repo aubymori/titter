@@ -15,3 +15,25 @@
 {% macro async_js(name) %}
 <script src="https://abs.twimg.com/k/{{ app.lang }}/{{ jsName(name, app.lang) }}.js" async=""></script>
 {% endmacro %}
+
+{% macro text(text) %}
+{% apply spaceless %}
+{% if text.simpleText %}
+    {{ text.simpleText }}
+{% elseif text.runs %}
+    {% for run in text.runs %}
+        {% if run.emoji %}
+        <img class="Emoji Emoji--forText" src="{{ run.emoji.url }}" draggable="false" alt="{{ run.emoji.alt }}" title="{{ run.emoji.label }}" aria-label="Emoji: {{ run.emoji.label }}">
+        {% else %}
+        {% if run.url %}
+        <a href="{{ run.url }}">
+        {% endif %}
+            {{ run.text }}
+        {% if run.url %}
+        </a>
+        {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% endapply %}
+{% endmacro %}

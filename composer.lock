@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cf0e284576acea181b4fd6de1a290a44",
+    "content-hash": "6118e49653126c0d691044c1ec8dd342",
     "packages": [
+        {
+            "name": "p3k/emoji-detector",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aaronpk/emoji-detector-php.git",
+                "reference": "cb7234db0bbfbdb7c79700288c49a810a13ef578"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aaronpk/emoji-detector-php/zipball/cb7234db0bbfbdb7c79700288c49a810a13ef578",
+                "reference": "cb7234db0bbfbdb7c79700288c49a810a13ef578",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Emoji.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Parecki",
+                    "email": "aaron@parecki.com",
+                    "homepage": "https://aaronparecki.com/"
+                }
+            ],
+            "description": "Detect and return all emoji found in a string",
+            "homepage": "https://github.com/aaronpk/emoji-detector-php",
+            "support": {
+                "issues": "https://github.com/aaronpk/emoji-detector-php/issues",
+                "source": "https://github.com/aaronpk/emoji-detector-php/tree/1.0.0"
+            },
+            "time": "2022-08-30T22:08:18+00:00"
+        },
         {
             "name": "stillat/numeral.php",
             "version": "v2.0.2",
@@ -298,5 +344,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

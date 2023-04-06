@@ -9,6 +9,7 @@ class ComposerStaticInit0024313064580fc0985f41849d180f44
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'd08bec471a180204a14ef3c91e951f99' => __DIR__ . '/..' . '/p3k/emoji-detector/src/Emoji.php',
     );
 
     public static $prefixLengthsPsr4 = array (

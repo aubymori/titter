@@ -1,6 +1,7 @@
 {
     "require": {
         "twig/twig": "^3.4",
-        "stillat/numeral.php": "^2.0"
+        "stillat/numeral.php": "^2.0",
+        "p3k/emoji-detector": "^1.0"
     }
 }

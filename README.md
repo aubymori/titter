@@ -9,8 +9,14 @@ So basically, the current Twitter frontend sucks. It's slow, ugly, and horrible.
 
 ## Requirements
 
-titter requires at least **PHP 8.1**.
+titter requires at least **PHP 8.1**. You will also need the `intl` extension, as it is needed for emoji parsing. It comes with XAMPP, but it is disabled by default. You can enable it by uncommenting the line that reads `;extension=intl` in `C:\xampp\php\php.ini`.
 
 ## Want to contribute?
 
 See [this document](CONTRIBUTE.md).
+
+## Thank you!
+
+* **[Taniko Yamamoto](https://github.com/YukisCoffee)** and the **[Rehike](https://github.com/Rehike/Rehike)** project for laying out the structure of frontends like this
+* **[Aaron Parecki](https://github.com/aaronpk)** for writing the emoji parser titter uses for Twemoji
+* **[Symfony](https://github.com/symfony)** for creating Twig, the templating engine titter uses

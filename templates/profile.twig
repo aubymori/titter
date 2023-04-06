@@ -125,6 +125,7 @@ wrapper-profile
     {% else %}
         {% embed "common/three_col_page.twig" %}
             {% block col_one_content %}
+                {% import "core/macros.twig" as core %}
                 {% set info = app.page.info %}
                 <div class="Grid Grid--withGutter">
                     <div class="Grid-cell">
@@ -132,7 +133,7 @@ wrapper-profile
                             <div class="ProfileHeaderCard">
                                 {% apply spaceless %}
                                 <h1 class="ProfileHeaderCard-name">
-                                    <a href="/{{ info.screenName }}" class="ProfileHeaderCard-nameLink u-textInheritColor js-nav">{{ info.name }}</a>
+                                    <a href="/{{ info.screenName }}" class="ProfileHeaderCard-nameLink u-textInheritColor js-nav">{{ core.text(info.name) }}</a>
                                     {% if info.verified %}
                                     <span class="ProfileHeaderCard-badges">
                                         <a href="/help/verified" class="js-tooltip" data-placement="right" target="_blank" rel="noopener" title="{{ app.msgs.verifiedAccount }}">
@@ -152,19 +153,7 @@ wrapper-profile
                                     </a>
                                 </h2>
                                 <p class="ProfileHeaderCard-bio u-dir" dir="ltr">
-                                    {% if info.bio.simpleText %}
-                                        {{ info.bio.simpleText }}
-                                    {% else %}
-                                        {% for run in info.bio.runs %}
-                                            {% if run.url %}
-                                                <a href="{{ run.url }}">
-                                            {% endif %}
-                                            {{ run.text }}
-                                            {% if run.url %}
-                                                </a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
+                                    {{ core.text(info.bio) }}
                                 </p>
                             </div>
                         </div>

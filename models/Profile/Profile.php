@@ -180,7 +180,7 @@ class ProfileCanopyStat
 
 class ProfileInfo
 {
-    public string $name;
+    public object $name;
     public string $screenName;
     public object $bio;
     public string $location;
@@ -192,7 +192,7 @@ class ProfileInfo
 
     public function __construct(object $info, bool $blueVerified)
     {
-        $this->name = $info->name;
+        $this->name = Runs::twemoji($info->name);
         $this->screenName = $info->screen_name;
         $this->verified = ($info->verified || $blueVerified);
         $links = [];
