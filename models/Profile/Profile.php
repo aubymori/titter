@@ -43,7 +43,7 @@ class Profile
         );
 
         $this->canopy = new ProfileCanopy($data->user->legacy, $data->user->is_blue_verified, (int) $data->user->rest_id, $tab);
-        $this->info = new ProfileInfo($data->user->legacy, $data->user->is_blue_verified);
+        $this->info = new ProfileInfo($data->user->legacy, $data->user->legacy_extended_profile, $data->user->is_blue_verified);
         $this->sidebar = new ProfileSidebar();
 
         if (in_array($tab, self::TWEET_TABS) && isset($data->tweets))
@@ -183,15 +183,16 @@ class ProfileInfo
     public object $name;
     public string $screenName;
     public object $bio;
-    public string $location;
+    public object $location;
     public object $url;
-    public string $joinDate;
+    public object $joinDate;
     public string $birthDate;
 
     public bool $verified;
 
-    public function __construct(object $info, bool $blueVerified)
+    public function __construct(object $info, object $infoEx, bool $blueVerified)
     {
+        $strings = Profile::$strings;
         $this->name = Runs::twemoji($info->name);
         $this->screenName = $info->screen_name;
         $this->verified = ($info->verified || $blueVerified);
@@ -201,7 +202,34 @@ class ProfileInfo
         {
             $links[] = $url->display_url;
         }
-        $this->bio = Runs::from($info->description, $links);
+        if (isset($info->description))
+        {
+            $this->bio = Runs::from($info->description, $links);
+        }
+        if (isset($info->location) && !empty($info->location))
+        {
+            $this->location = Runs::twemoji($info->location);
+        }
+        if (isset($info->url))
+        {
+            $this->url = (object) [
+                "runs" => [
+                    (object) [
+                        "text" => $info->entities->url->urls[0]->display_url,
+                        "url" => $info->url
+                    ]
+                ]
+            ];
+        }
+        $joinDate = date_create($info->created_at);
+        $this->joinDate = (object) [
+            "text" => $strings->bioJoinDate($joinDate->format("F Y")),
+            "title" => $joinDate->format("g:i A - j M Y")
+        ];
+        if ($bday = @$infoEx->birthdate)
+        {
+            $this->birthDate = $strings->bioBirthday(date_create(implode("-", [$bday->year, $bday->month, $bday->day]))->format("F j, Y"));
+        }
     }
 }
 

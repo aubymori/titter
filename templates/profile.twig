@@ -152,9 +152,35 @@ wrapper-profile
                                         </span>
                                     </a>
                                 </h2>
-                                <p class="ProfileHeaderCard-bio u-dir" dir="ltr">
-                                    {{ core.text(info.bio) }}
-                                </p>
+                                <p class="ProfileHeaderCard-bio u-dir" dir="ltr">{{ core.text(info.bio) }}</p>
+                                <div class="ProfileHeaderCard-location {{ not info.location ? "u-hidden" }}">
+                                    <span class="Icon Icon--geo Icon--medium" aria-hidden="true" role="presentation"></span>
+                                    <span class="ProfileHeaderCard-locationText u-dir" dir="ltr">
+                                        {{ core.text(info.location) }}
+                                    </span>
+                                </div>
+                                <div class="ProfileHeaderCard-url {{ not info.url ? "u-hidden" }}">
+                                    <span class="Icon Icon--url Icon--medium" aria-hidden="true" role="presentation"></span>
+                                    <span class="ProfileHeaderCard-urlText u-dir" dir="ltr">
+                                        {{ core.text(info.url) }}
+                                    </span>
+                                </div>
+                                <div class="ProfileHeaderCard-joinDate">
+                                    <span class="Icon Icon--calendar Icon--medium" aria-hidden="true" role="presentation"></span>
+                                    <span class="ProfileHeaderCard-joinDateText u-dir" dir="ltr">
+                                        <span class="js-tooltip" title="{{ info.joinDate.title }}">
+                                            {{ info.joinDate.text }}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="ProfileHeaderCard-birthdate {{ not info.birthDate ? "u-hidden" }}">
+                                    <span class="Icon Icon--balloon Icon--medium" aria-hidden="true" role="presentation"></span>
+                                    <span class="ProfileHeaderCard-birthdateText u-dir" dir="ltr">
+                                        <span class="js-tooltip" title="Public">
+                                            {{ info.birthDate }}
+                                        </span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>

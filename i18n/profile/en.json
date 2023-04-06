@@ -10,7 +10,7 @@
     "statLists": "Lists",
     "statListsTip": "%s Lists",
     "verifiedBadge": "Verified account",
-    "bioLocation": "Joined %s",
+    "bioJoinDate": "Joined %s",
     "bioBirthday": "Born %s",
     "tabTweets": "Tweets",
     "tabWithReplies": "Tweets & replies",
