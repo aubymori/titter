@@ -228,7 +228,14 @@ class ProfileInfo
         ];
         if ($bday = @$infoEx->birthdate)
         {
-            $this->birthDate = $strings->bioBirthday(date_create(implode("-", [$bday->year, $bday->month, $bday->day]))->format("F j, Y"));
+            if (isset($bday->year))
+            {
+                $this->birthDate = $strings->bioBirthday(date_create(implode("-", [$bday->year, $bday->month, $bday->day]))->format("F j, Y"));
+            }
+            else
+            {
+                $this->birthDate = $strings->bioBirthday(date_create(implode("/", [$bday->month, $bday->day]))->format("F j"));
+            }
         }
     }
 }
