@@ -198,12 +198,12 @@ wrapper-profile
                     </h2>
                     <ul class="ProfileHeading-toggle">
                         {% for tab in heading.tabs %}
-                        <li class="ProfileHeading-toggleItem {{ tab.active ? "is-active" }}" data-element-term="{{ tab.tab }}_toggle">
+                        <li class="ProfileHeading-toggleItem {{ tab.active ? "is-active" : "u-textUserColor" }}" data-element-term="{{ tab.tab }}_toggle">
                             {% if tab.active %}
                             <span aria-hidden="true">{{ tab.label }}</span>
                             <span class="u-hiddenVisually">{{ tab.activeLabel }}</span>
                             {% else %}
-                            <a href="{{ tab.url }}" class="ProfileHeading-toggleLink" data-nav="{{ tab.tab }}_toggle">
+                            <a href="{{ tab.url }}" class="ProfileHeading-toggleLink {{ tab.openSignup ? "js-openSignupDialog js-nonNavigable" }}" data-nav="{{ tab.tab }}_toggle">
                                 {{ tab.label }}
                             </a>
                             {% endif %}

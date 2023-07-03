@@ -24,7 +24,8 @@ class ProfileTab
         public string $label,
         public string $url,
         public string $tab,
-        public bool $active
+        public bool $active,
+        public bool $openSignup = false
     )
     {
         $this->activeLabel = Profile::$strings->tabActive($this->label);

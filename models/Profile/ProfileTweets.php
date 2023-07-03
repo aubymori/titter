@@ -41,7 +41,8 @@ class ProfileTweets
             $strings->tabMedia,
             "/{$screenName}/media",
             "photos_and_videos",
-            $tab == "media"
+            $tab == "media",
+            true
         ));
 
 
