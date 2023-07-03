@@ -1,3 +1,7 @@
+# Deprecation
+
+PHP Titter is being deprecated, as I feel it would be much better as a Chrome/Firefox extension instead. You can find it [here](https://github.com/aubymori/titter-web).
+
 # Titter
 
 So basically, the current Twitter frontend sucks. It's slow, ugly, and horrible. I was fine with using it until they started introducing shit like the piss verification mark, businesses with square profile pictures, etc. But I finally had it when they introduced Tweet view counts. It offsets the reply button, and even worse, breaks an extension that I used to download videos. So we're here. This is a recreation of the Twitter frontend used from 2014-2019. More specifically, 2017-2019, because it has the 2017+ design.
@@ -17,6 +21,6 @@ See [this document](CONTRIBUTE.md).
 
 ## Thank you!
 
-* **[Taniko Yamamoto](https://github.com/YukisCoffee)** and the **[Rehike](https://github.com/Rehike/Rehike)** project for laying out the structure of frontends like this
+* **[Taniko Yamamoto](https://github.com/YukisCoffee)**<!-- love you <3 --> and the **[Rehike](https://github.com/Rehike/Rehike)** project for laying out the structure of frontends like this
 * **[Aaron Parecki](https://github.com/aaronpk)** for writing the emoji parser titter uses for Twemoji
 * **[Symfony](https://github.com/symfony)** for creating Twig, the templating engine titter uses
